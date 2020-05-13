@@ -1,8 +1,11 @@
 openapi: 3.0.0
 info:
-  title: answer
+  title: Answer
   version: '1.0'
-  description: amber 答题接口
+  description: Amber 答题接口
+  contact:
+    email: bytecodebugs@gmail.com
+    name: bytecodebugs
 servers:
   - url: 'http://localhost:3000'
 paths:
@@ -108,3 +111,4 @@ paths:
       description: ''
 components:
   schemas: {}
+  securitySchemes: {}
