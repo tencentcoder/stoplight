@@ -28,22 +28,36 @@ paths:
                   data:
                     type: object
                     properties:
-                      start_time:
-                        type: string
+                      period_list:
+                        type: array
                         format: time
-                        description: 答题开始时间
-                      end_time:
-                        type: string
-                        format: time
-                        description: 答题截止时间
+                        description: 答题周期
+                        items:
+                          type: object
+                          properties:
+                            start_time:
+                              type: string
+                              description: 答题开始时间
+                            end_time:
+                              type: string
+                              description: 截止时间
+                            times:
+                              type: string
+                              description: 默认答题次数
                       remaining_times:
                         type: integer
-                        description: 答题剩余次数
+                        description: 当前答题剩余次数
                       increaseable:
                         type: boolean
-                        description: 是否可以增加答题次数
+                        description: 当前是否可以增加答题次数
       operationId: ''
-      description: 1. 获取用户答题时间段
+      description: |-
+        1. 获取用户用户答题时间段列表
+          开始时间
+          结束时间
+          默认答题次数
+        2. 获取用户当前剩余答题次数
+        3. 获取用户当前是否可增加答题次数
       parameters: []
     parameters: []
   /answer/start:
@@ -78,11 +92,20 @@ paths:
                               type: array
                               items:
                                 type: string
+                            question_id:
+                              type: string
+                            difficulty:
+                              type: string
                       answer_id:
                         type: string
               examples:
                 example-1: {}
       description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
   /answer/reward:
     post:
       summary: 答题结束领取奖励
@@ -98,8 +121,13 @@ paths:
               properties:
                 answer_id:
                   type: string
-                correct_times:
-                  type: integer
+                correct_questions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      question_id:
+                        type: string
   /answer/times/increase:
     parameters: []
     post:
