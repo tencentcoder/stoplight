@@ -54,8 +54,19 @@ paths:
                               type: string
                       enabled:
                         type: boolean
+                      max_ad_times:
+                        type: integer
+                      max_normal_times:
+                        type: integer
       operationId: ''
-      description: "1. 获取用户用户答题时间段列表\n\n  开始时间\n  \n  结束时间\n  \n  初始答题次数\n  \n  看广告可获取答题次数\n  \n  金币 500\n  \n  福气 500\n  \n  宝石 500\n   \n2. 获取用户已答题次数\n3. 累计用户数\n4. 分享文案"
+      description: |-
+        1. 时间段文案
+        2. 获取用户已答题次数
+        3. 累计用户数
+        4. 分享文案
+        5. 奖励列表
+        6. 最多答题次数
+        7. 最多广告获取次数
       parameters: []
     parameters: []
   /quiz/start:
