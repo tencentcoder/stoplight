@@ -129,25 +129,6 @@ paths:
                 type: object
                 properties:
                   code:
-                    type: string
-                  message:
-                    type: string
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        value:
-                          type: number
-                        type:
-                          type: string
-        '':
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
                     type: number
                   data:
                     type: array
@@ -162,6 +143,8 @@ paths:
                           type: string
                   message:
                     type: string
+              examples:
+                example-1: {}
       requestBody:
         content:
           application/json:
