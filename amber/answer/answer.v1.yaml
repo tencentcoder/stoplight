@@ -9,7 +9,7 @@ info:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  /answer/status:
+  /quiz/status:
     get:
       summary: 获取答题模块状态
       tags: []
@@ -28,41 +28,11 @@ paths:
                   data:
                     type: object
                     properties:
-                      period_list:
-                        type: array
+                      period_msg:
+                        type: string
                         format: time
                         description: 答题周期
-                        items:
-                          type: object
-                          properties:
-                            start_time:
-                              type: string
-                              description: 答题开始时间
-                            end_time:
-                              type: string
-                              description: 截止时间
-                            times:
-                              type: string
-                              description: 默认答题次数
-                            coins:
-                              type: integer
-                              description: 可获取的最大金币数
-                            ambers:
-                              type: integer
-                              description: 可获得最大宝石数
-                            blessings:
-                              type: integer
-                              description: 最大可获取的贵气
-                            ad_times:
-                              type: integer
-                              description: 可以通过看广告获取次数
-                            ratio:
-                              type: integer
-                              description: 参与人数系数
-                            base:
-                              type: number
-                              description: 在线用户基数
-                      times:
+                      left_normal_times:
                         type: integer
                         description: 当前答题剩余次数
                       amount:
@@ -71,24 +41,24 @@ paths:
                       share_msg:
                         type: string
                         description: 分享文案
+                      left_ad_times:
+                        type: string
+                      reward_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            reward_type:
+                              type: string
+                            reward_value:
+                              type: string
+                      enabled:
+                        type: boolean
       operationId: ''
-      description: |-
-        1. 获取用户用户答题时间段列表
-          开始时间
-          结束时间
-          初始答题次数
-          看广告可获取答题次数
-          金币 500
-          福气 500
-          宝石 500
-          在线用户系数
-          在线用户基数
-        2. 获取用户已答题次数
-        3. 当前用户数
-        4. 分享文案
+      description: "1. 获取用户用户答题时间段列表\n\n  开始时间\n  \n  结束时间\n  \n  初始答题次数\n  \n  看广告可获取答题次数\n  \n  金币 500\n  \n  福气 500\n  \n  宝石 500\n   \n2. 获取用户已答题次数\n3. 累计用户数\n4. 分享文案"
       parameters: []
     parameters: []
-  /answer/start:
+  /quiz/start:
     post:
       summary: 开始答题获取试题内容
       operationId: post-answer-start
@@ -120,13 +90,11 @@ paths:
                               type: array
                               items:
                                 type: string
-                            question_id:
-                              type: string
-                            difficulty:
-                              type: string
                             index:
                               type: string
-                      answer_id:
+                            question_id:
+                              type: string
+                      quiz_id:
                         type: string
               examples:
                 example-1: {}
@@ -136,7 +104,8 @@ paths:
           application/json:
             schema:
               type: object
-  /answer/reward:
+    parameters: []
+  /quiz/reward:
     post:
       summary: 答题结束领取奖励
       operationId: post-answer-reward
@@ -161,49 +130,47 @@ paths:
                           type: number
                         type:
                           type: string
+        '':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  '':
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        reward_type:
+                          type: string
+                        reward_value:
+                          type: number
+                        event_id:
+                          type: string
+                  message:
+                    type: string
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                answer_id:
+                quiz_id:
                   type: string
-                correct:
+                questions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      question_id:
+                        type: string
+                      is_corrected:
+                        type: boolean
+                progress:
                   type: number
-  /answer/multiple:
-    post:
-      summary: 答题结束领取奖励
-      operationId: post-answer-reward
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        value:
-                          type: number
-                        type:
-                          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                answer_id:
-                  type: string
+    parameters: []
 components:
   schemas: {}
   securitySchemes: {}
