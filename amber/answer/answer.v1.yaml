@@ -46,27 +46,46 @@ paths:
                               description: 默认答题次数
                             coins:
                               type: integer
-                            gems:
+                              description: 可获取的最大金币数
+                            ambers:
                               type: integer
+                              description: 可获得最大宝石数
                             blessings:
                               type: integer
-                      remaining_times:
+                              description: 最大可获取的贵气
+                            ad_times:
+                              type: integer
+                              description: 可以通过看广告获取次数
+                            ratio:
+                              type: integer
+                              description: 参与人数系数
+                            base:
+                              type: number
+                              description: 在线用户基数
+                      times:
                         type: integer
                         description: 当前答题剩余次数
-                      increaseable:
-                        type: boolean
-                        description: 当前是否可以增加答题次数
+                      amount:
+                        type: integer
+                        description: 当前在线答题人数
+                      share_msg:
+                        type: string
+                        description: 分享文案
       operationId: ''
       description: |-
         1. 获取用户用户答题时间段列表
           开始时间
           结束时间
-          默认答题次数
+          初始答题次数
+          看广告可获取答题次数
           金币 500
           福气 500
           宝石 500
-        2. 获取用户当前剩余答题次数
-        3. 获取用户当前是否可增加答题次数
+          在线用户系数
+          在线用户基数
+        2. 获取用户已答题次数
+        3. 当前用户数
+        4. 分享文案
       parameters: []
     parameters: []
   /answer/start:
@@ -124,6 +143,24 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                        type:
+                          type: string
       requestBody:
         content:
           application/json:
@@ -132,10 +169,41 @@ paths:
               properties:
                 answer_id:
                   type: string
-                multiple:
-                  type: boolean
                 correct:
                   type: number
+  /answer/multiple:
+    post:
+      summary: 答题结束领取奖励
+      operationId: post-answer-reward
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                        type:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answer_id:
+                  type: string
 components:
   schemas: {}
   securitySchemes: {}
