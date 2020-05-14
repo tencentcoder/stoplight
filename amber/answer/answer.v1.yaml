@@ -44,6 +44,12 @@ paths:
                             times:
                               type: string
                               description: 默认答题次数
+                            coins:
+                              type: integer
+                            gems:
+                              type: integer
+                            blessings:
+                              type: integer
                       remaining_times:
                         type: integer
                         description: 当前答题剩余次数
@@ -56,6 +62,9 @@ paths:
           开始时间
           结束时间
           默认答题次数
+          金币 500
+          福气 500
+          宝石 500
         2. 获取用户当前剩余答题次数
         3. 获取用户当前是否可增加答题次数
       parameters: []
@@ -96,6 +105,8 @@ paths:
                               type: string
                             difficulty:
                               type: string
+                            index:
+                              type: string
                       answer_id:
                         type: string
               examples:
@@ -121,22 +132,10 @@ paths:
               properties:
                 answer_id:
                   type: string
-                correct_questions:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      question_id:
-                        type: string
-  /answer/times/increase:
-    parameters: []
-    post:
-      summary: 添加答题次数
-      operationId: post-answer-times-increase
-      responses:
-        '200':
-          description: OK
-      description: ''
+                multiple:
+                  type: boolean
+                correct:
+                  type: number
 components:
   schemas: {}
   securitySchemes: {}
