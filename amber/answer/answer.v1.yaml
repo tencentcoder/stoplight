@@ -7,7 +7,7 @@ info:
     email: bytecodebugs@gmail.com
     name: bytecodebugs
 servers:
-  - url: 'http://localhost:7988'
+  - url: 'http://127.0.0.1:7988'
   - url: 'http://52.83.100.136:7988'
     description: ''
 paths:
