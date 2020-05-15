@@ -60,6 +60,32 @@ paths:
                         type: integer
                       max_normal_times:
                         type: integer
+              examples:
+                example:
+                  value:
+                    code: 0
+                    message: OK
+                    data:
+                      period_msg: |-
+                        答题时间:
+                        每日  15:00~18:00
+                             21:00~24:00
+                      left_normal_times: 3
+                      max_normal_times: 3
+                      left_ad_times: 3
+                      max_ad_times: 3
+                      share_msg: |-
+                        我的邀请码:P6F8PB9ZS
+                        下载疯狂挖宝，答题赢钱合宝石成为大富翁！填写我的邀请码，登陆即领海量金币，每天答题有收益，快来一起合宝石赚钱！下载链接：https://invite.atcloudbox.com/invite/amber/index.html
+                      enabled: false
+                      amount: 310
+                      reward_list:
+                        - reward_type: coin
+                          reward_value: 555
+                        - reward_type: amber
+                          reward_value: 555
+                        - reward_type: noble
+                          reward_value: 555
       operationId: ''
       description: |-
         1. 时间段文案
@@ -110,13 +136,117 @@ paths:
                       quiz_id:
                         type: string
               examples:
-                example-1: {}
+                example:
+                  value:
+                    code: 0
+                    message: OK
+                    data:
+                      quiz_id: sOOqiStAK
+                      questions:
+                        - question_id: question00
+                          body: '0*29=?'
+                          answer: '0'
+                          options:
+                            - '0'
+                            - '1'
+                            - '2'
+                          index: 0
+                        - question_id: question01
+                          body: '1*30=?'
+                          answer: '30'
+                          options:
+                            - '30'
+                            - '32'
+                            - '33'
+                          index: 1
+                        - question_id: question02
+                          body: '2*31=?'
+                          answer: '62'
+                          options:
+                            - '62'
+                            - '65'
+                            - '66'
+                          index: 2
+                        - question_id: question03
+                          body: '3*32=?'
+                          answer: '96'
+                          options:
+                            - '96'
+                            - '100'
+                            - '101'
+                          index: 3
+                        - question_id: question04
+                          body: '4*33=?'
+                          answer: '132'
+                          options:
+                            - '132'
+                            - '137'
+                            - '138'
+                          index: 4
+                        - question_id: question05
+                          body: '5*34=?'
+                          answer: '170'
+                          options:
+                            - '170'
+                            - '176'
+                            - '177'
+                          index: 5
+                        - question_id: question06
+                          body: '6*35=?'
+                          answer: '210'
+                          options:
+                            - '210'
+                            - '217'
+                            - '218'
+                          index: 6
+                        - question_id: question07
+                          body: '7*36=?'
+                          answer: '252'
+                          options:
+                            - '252'
+                            - '260'
+                            - '261'
+                          index: 7
+                        - question_id: question08
+                          body: '8*37=?'
+                          answer: '296'
+                          options:
+                            - '296'
+                            - '305'
+                            - '306'
+                          index: 8
+                        - question_id: question09
+                          body: '9*38=?'
+                          answer: '342'
+                          options:
+                            - '342'
+                            - '352'
+                            - '353'
+                          index: 9
+                        - question_id: question10
+                          body: '10*39=?'
+                          answer: '390'
+                          options:
+                            - '390'
+                            - '401'
+                            - '402'
+                          index: 10
+                        - question_id: question11
+                          body: '11*40=?'
+                          answer: '440'
+                          options:
+                            - '440'
+                            - '452'
+                            - '453'
+                          index: 11
       description: ''
       requestBody:
         content:
           application/json:
             schema:
               type: object
+            examples:
+              example-1: {}
     parameters: []
   /quiz/reward:
     post:
@@ -152,7 +282,21 @@ paths:
                               type: number
                               description: 奖励值
               examples:
-                example-1: {}
+                example:
+                  value:
+                    code: 0
+                    message: OK
+                    data:
+                      reward_list:
+                        - event_id: QkuvGyEGQ
+                          reward_type: coin
+                          reward_value: 555
+                        - event_id: ''
+                          reward_type: amber
+                          reward_value: 555
+                        - event_id: ''
+                          reward_type: noble
+                          reward_value: 555
       requestBody:
         content:
           application/json:
