@@ -7,7 +7,9 @@ info:
     email: bytecodebugs@gmail.com
     name: bytecodebugs
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:7988'
+  - url: 'http://52.83.100.136:7988'
+    description: ''
 paths:
   /quiz/status:
     get:
@@ -130,19 +132,25 @@ paths:
                 properties:
                   code:
                     type: number
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        reward_type:
-                          type: string
-                        reward_value:
-                          type: number
-                        event_id:
-                          type: string
                   message:
                     type: string
+                  data:
+                    type: object
+                    properties:
+                      reward_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            event_id:
+                              type: string
+                              description: 当reward_type 为金币时 有值
+                            reward_type:
+                              type: string
+                              description: 奖励类型
+                            reward_value:
+                              type: number
+                              description: 奖励值
               examples:
                 example-1: {}
       requestBody:
