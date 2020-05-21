@@ -23,13 +23,24 @@ paths:
               schema:
                 type: object
                 properties:
-                  '':
+                  code:
                     type: number
                   message:
                     type: string
                   data:
                     type: object
-      operationId: get-red_envelope-check
+                    properties:
+                      show:
+                        type: number
+                        description: 展示红包金额
+      operationId: post-red_envelope-check
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: level
+          description: 用户当前等级
+      description: 1. 检查当前可以获取的最大红包金额
   /red_envelope/reward:
     post:
       summary: Reward Red Envelope
@@ -49,10 +60,25 @@ paths:
                   data:
                     type: object
                     properties:
-                      '':
-                        type: string
+                      total:
+                        type: number
+                        description: 当前红包累计总额
+                      value:
+                        type: number
+                        description: 用户本次提现金额
       operationId: get-red_envelope-reward
       description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: number
+                  description: 用户等级
+              required:
+                - level
   /red_envelope/status:
     get:
       summary: Get User Red Envelope Status
@@ -71,26 +97,19 @@ paths:
                     type: string
                   data:
                     type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: 红包活动是否有效
+                      target:
+                        type: number
+                        description: 目标提现金额
+                      total:
+                        type: number
+                        description: 当前用户累计红包金额
+                      left_day_times:
+                        type: number
       operationId: get-red_envelope-reward
-      description: ''
-  /red_envelope/withdraw:
-    post:
-      summary: Withdraw Red Envelope
-      operationId: post-red_envelope-withdraw
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-                  data:
-                    type: object
       description: ''
 components:
   schemas: {}
