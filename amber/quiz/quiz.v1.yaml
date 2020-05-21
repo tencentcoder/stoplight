@@ -281,6 +281,17 @@ paths:
                             reward_value:
                               type: number
                               description: 奖励值
+                      surprise_reward_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            event_id:
+                              type: string
+                            reward_type:
+                              type: string
+                            reward_value:
+                              type: number
               examples:
                 example:
                   value:
