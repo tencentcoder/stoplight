@@ -73,5 +73,24 @@ paths:
                     type: object
       operationId: get-red_envelope-reward
       description: ''
+  /red_envelope/withdraw:
+    post:
+      summary: Withdraw Red Envelope
+      operationId: post-red_envelope-withdraw
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+      description: ''
 components:
   schemas: {}
