@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: Red Envelope APIs
+  version: '1.0'
+  description: Mickey Red Envelope APIs
+  contact:
+    name: bytecodebugs
+    email: bytecodebugs@gmail.com
+servers:
+  - url: 'http://localhost:7888'
+  - url: 'http://52.83.100.136:7888'
+    description: ''
+paths:
+  /red_envelope/check:
+    get:
+      summary: Check Red Envelope
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+      operationId: get-red_envelope-check
+  /red_envelope/reward:
+    post:
+      summary: Reward Red Envelope
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      '':
+                        type: string
+      operationId: get-red_envelope-reward
+      description: ''
+  /red_envelope/status:
+    get:
+      summary: Get User Red Envelope Status
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+      operationId: get-red_envelope-reward
+      description: ''
+components:
+  schemas: {}
