@@ -107,7 +107,7 @@ paths:
                       total:
                         type: number
                         description: 当前用户累计红包金额
-                      left_day_times:
+                      daily_left_times:
                         type: number
       operationId: get-red_envelope-reward
       description: ''
