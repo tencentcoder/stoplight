@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Red Envelope APIs
   version: '1.0'
-  description: Mickey Red Envelope APIs
+  description: 'Mickey Red Envelope APIs, PS: 红包对应的“reward_type” 为 7'
   contact:
     name: bytecodebugs
     email: bytecodebugs@gmail.com
@@ -11,7 +11,7 @@ servers:
   - url: 'http://52.83.100.136:7888'
     description: ''
 paths:
-  /red_envelope/check:
+  /red_envelope/show:
     get:
       summary: Check Red Envelope
       tags: []
@@ -34,13 +34,9 @@ paths:
                         type: number
                         description: 展示红包金额
       operationId: post-red_envelope-check
-      parameters:
-        - schema:
-            type: number
-          in: query
-          name: level
-          description: 用户当前等级
+      parameters: []
       description: 1. 检查当前可以获取的最大红包金额
+    parameters: []
   /red_envelope/reward:
     post:
       summary: Reward Red Envelope
@@ -68,17 +64,6 @@ paths:
                         description: 用户本次提现金额
       operationId: get-red_envelope-reward
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                level:
-                  type: number
-                  description: 用户等级
-              required:
-                - level
   /red_envelope/status:
     get:
       summary: Get User Red Envelope Status
@@ -109,6 +94,15 @@ paths:
                         description: 当前用户累计红包金额
                       daily_left_times:
                         type: number
+                        description: 当天剩余红包次数
+                      start_time:
+                        type: string
+                        format: date
+                        description: 开始时间
+                      end_time:
+                        type: string
+                        format: date
+                        description: 结束时间
       operationId: get-red_envelope-reward
       description: ''
 components:
