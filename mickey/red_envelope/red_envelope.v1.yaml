@@ -104,6 +104,6 @@ paths:
                         format: date
                         description: 结束时间
       operationId: get-red_envelope-reward
-      description: 'PS： 接口返回数据 对应的 /user_status 接口的data [red_envelope] 数据中 '
+      description: "PS： 接口返回数据 对应的 /user_status 接口的data [red_envelope] 数据中 \nPS:  红包对应的 reward_type 为 7"
 components:
   schemas: {}
