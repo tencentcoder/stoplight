@@ -10,6 +10,8 @@ servers:
   - url: 'http://localhost:7888'
   - url: 'http://52.83.100.136:7888'
     description: ''
+  - url: 'http://test-amber-red-envelope.dev-bp.atcloudbox.com'
+    description: ''
 paths:
   /red_envelope/show:
     get:

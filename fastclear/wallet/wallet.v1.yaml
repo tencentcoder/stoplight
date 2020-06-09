@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: wallet
+  version: '1.0'
+  description: FastClear Wallet APIs
+servers:
+  - url: 'http://test-fastclear.dev-bp.atcloudbox.com'
+  - url: 'http://localhost:8809'
+    description: ''
+paths:
+  /wallet:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      coin_value:
+                        type: integer
+                        description: 金币总数
+                      today_value:
+                        type: integer
+                      today_withdraw_times:
+                        type: integer
+                      available_cash:
+                        type: number
+                        description: 可以提现金额
+                      withdraw_config:
+                        type: object
+                        properties:
+                          cash:
+                            type: number
+                          count:
+                            type: integer
+                          discount:
+                            type: integer
+                          status:
+                            type: integer
+                          check_in_days:
+                            type: integer
+                            description: 提现需要满足的累积签到天数
+                        required:
+                          - check_in_days
+                      need_coin_value:
+                        type: number
+                        description: 提现还需要的金币数
+                      target_cash_value:
+                        type: number
+                        description: 目标提现金额
+                      total_check_in_times:
+                        type: integer
+                        description: 当前用户累计签到天数
+              examples:
+                example-1: {}
+      operationId: get-wallet-info
+    parameters: []
+components:
+  schemas: {}
