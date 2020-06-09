@@ -59,7 +59,7 @@ paths:
                       target_cash_value:
                         type: number
                         description: 目标提现金额
-                      total_check_in_times:
+                      total_check_in_days:
                         type: integer
                         description: 当前用户累计签到天数
               examples:
