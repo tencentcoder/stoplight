@@ -1,0 +1,169 @@
+openapi: 3.0.0
+info:
+  title: pusher
+  version: '1.0'
+servers:
+  - url: 'http://127.0.0.1:8080'
+paths:
+  /user/login:
+    post:
+      summary: User Login
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      user_id:
+                        type: string
+      operationId: get-user-login
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-APP-ID
+          required: true
+  /push/setting:
+    post:
+      summary: Create And Update Push Setting
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+      operationId: get-push-setting
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-APP-ID
+          required: true
+          description: 应用ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                push_enable:
+                  type: boolean
+                inactive_hour:
+                  type: integer
+                strategy_id:
+                  type: integer
+                push_hours:
+                  type: array
+                  minItems: 0
+                  maxItems: 23
+                  items:
+                    type: integer
+  /push/open:
+    post:
+      summary: Report Push Open
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+      operationId: get-push-open
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-APP-ID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                target:
+                  type: string
+                target_value:
+                  type: string
+      description: ''
+  /push/engagement/android:
+    post:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-push-engagement-android
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-APP-ID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                app_key:
+                  type: string
+                target:
+                  type: string
+                target_value:
+                  type: string
+                push_type:
+                  type: string
+                device_info:
+                  type: object
+                notification_bar_type:
+                  type: string
+                notify_type:
+                  type: string
+                notification_bar_priority:
+                  type: string
+                notification_channel:
+                  type: string
+                remind:
+                  type: string
+                open_type:
+                  type: string
+                activity:
+                  type: string
+                popup_activity:
+                  type: string
+                open_url:
+                  type: string
+              required:
+                - target
+components:
+  schemas: {}
