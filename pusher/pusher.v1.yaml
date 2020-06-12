@@ -117,7 +117,7 @@ paths:
       description: ''
   /push/engagement/android:
     post:
-      summary: Your GET endpoint
+      summary: Update And Create Android Push Info
       tags: []
       responses: {}
       operationId: get-push-engagement-android
