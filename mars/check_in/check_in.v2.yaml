@@ -42,7 +42,7 @@ paths:
                               type: integer
                           times:
                             type: array
-                            description: 高级签到奖励配置
+                            description: 高级奖励倍数
                             items:
                               type: integer
                       check_in_status:
