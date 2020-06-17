@@ -57,6 +57,12 @@ paths:
                       - check_in_status
       operationId: ''
       description: 获取签到状态 使用 GET方法获取
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-Dog-Token
+          description: 用户Token
     post:
       summary: 签到
       tags: []
