@@ -11,7 +11,7 @@ servers:
 paths:
   /v2/check_in:
     get:
-      summary: 获取签到信息
+      summary: 获取签到状态
       tags: []
       responses:
         '200':
@@ -28,9 +28,6 @@ paths:
                   data:
                     type: object
                     properties:
-                      begin_date:
-                        type: string
-                        description: 本次签到开始时间
                       period:
                         type: integer
                         description: 签到周期天数
@@ -43,7 +40,7 @@ paths:
                             description: 正常签到奖励配置
                             items:
                               type: integer
-                          advanced:
+                          times:
                             type: array
                             description: 高级签到奖励配置
                             items:
@@ -56,15 +53,12 @@ paths:
                       today_is_check_in:
                         type: boolean
                         description: 今天是否已签到
-                      today_is_double_reward:
-                        type: boolean
-                        description: 主要针对普通签到
                     required:
                       - check_in_status
       operationId: ''
-      description: 获取签到信息
+      description: 获取签到状态 使用 GET方法获取
     post:
-      summary: 高级签到接口
+      summary: 签到
       tags: []
       responses:
         '200':
@@ -87,14 +81,13 @@ paths:
                         items:
                           type: integer
                       reward_type:
-                        type: string
+                        type: integer
                         description: '签到奖励的货币类型，目前只有 coin:1'
                       reward_value:
-                        type: string
+                        type: integer
                         description: 本次签到奖励金额
-                      event_id:
-                        type: string
-                        description: '用于获取翻倍奖励，高级签到时 even_id = ""'
+                      total_value:
+                        type: integer
       requestBody:
         content:
           application/json:
@@ -104,4 +97,11 @@ paths:
                 check_in_type:
                   type: integer
                   description: '1:normal 2:advanced'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-Dog-Token
+          description: 用户Token
+      description: 签到 使用 Post 请求
     parameters: []
