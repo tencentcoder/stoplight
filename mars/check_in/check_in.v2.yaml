@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  title: CheckIn
+  version: '1.0'
+  description: 签到接口
+servers:
+  - url: 'http://test-mars.bp-dev.atcloudbox.com'
+    description: ''
+  - url: 'http://localhost:7803'
+    description: ''
+paths:
+  /v2/check_in:
+    get:
+      summary: 获取签到信息
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      begin_date:
+                        type: string
+                        description: 本次签到开始时间
+                      period:
+                        type: integer
+                        description: 签到周期天数
+                      reward_list:
+                        type: object
+                        description: 签到奖励配置
+                        properties:
+                          normal:
+                            type: array
+                            description: 正常签到奖励配置
+                            items:
+                              type: integer
+                          advanced:
+                            type: array
+                            description: 高级签到奖励配置
+                            items:
+                              type: integer
+                      check_in_status:
+                        type: array
+                        description: '1:表示普通签到 2:表示高级签到'
+                        items:
+                          type: integer
+                      today_is_check_in:
+                        type: boolean
+                        description: 今天是否已签到
+                      today_is_double_reward:
+                        type: boolean
+                        description: 主要针对普通签到
+                    required:
+                      - check_in_status
+      operationId: ''
+      description: 获取签到信息
+    post:
+      summary: 高级签到接口
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      check_in_status:
+                        type: array
+                        description: '周期内签到状态，包含周期内每一天签到的类型 1: 普通签到 2:高级签到'
+                        items:
+                          type: integer
+                      reward_type:
+                        type: string
+                        description: '签到奖励的货币类型，目前只有 coin:1'
+                      reward_value:
+                        type: string
+                        description: 本次签到奖励金额
+                      event_id:
+                        type: string
+                        description: '用于获取翻倍奖励，高级签到时 even_id = ""'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                check_in_type:
+                  type: integer
+                  description: '1:normal 2:advanced'
+    parameters: []
