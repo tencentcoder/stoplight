@@ -4,7 +4,7 @@ info:
   version: '1.0'
   description: 签到接口
 servers:
-  - url: 'http://test-mars.bp-dev.atcloudbox.com'
+  - url: 'http://test-mars.dev-bp.atcloudbox.com'
     description: ''
   - url: 'http://localhost:7803'
     description: ''
