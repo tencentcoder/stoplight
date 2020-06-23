@@ -235,12 +235,27 @@ paths:
                             reward_time:
                               type: string
                               description: 奖励领取时间
+                            quiz_count:
+                              type: integer
                           required:
                             - reward_type
                             - reward_value
                             - reward_date
                             - is_receive
                             - reward_time
+                            - quiz_count
+                      total_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            reward_type:
+                              type: integer
+                            reward_total:
+                              type: number
+                          required:
+                            - reward_type
+                            - reward_total
       operationId: get-quiz-rewards
       description: 获取用户奖励信息
       parameters:
