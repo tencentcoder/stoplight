@@ -266,9 +266,9 @@ paths:
           required: true
       description: 可以获取用户在某一特定时间内的某个类型的排名
     parameters: []
-  /quiz/reward_cards:
+  /quiz/revival:
     post:
-      summary: 获取复活卡
+      summary: 复活
       operationId: post-quiz-reward_card
       responses:
         '200':
@@ -282,7 +282,35 @@ paths:
                     type: number
                   message:
                     type: string
-      description: ''
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      friend:
+                        type: object
+                        description: 当复活的type为friend时返回
+                        properties:
+                          user_name:
+                            type: string
+                          avatar:
+                            type: string
+                      revival_card:
+                        type: object
+                        properties:
+                          total:
+                            type: number
+                            description: 当前复活卡总数
+                          today_left_times:
+                            type: integer
+                            description: 今日剩余使用次数
+                      today_revival_left_times:
+                        type: number
+                        description: 今日剩余复活次数
+                    required:
+                      - type
+                      - today_revival_left_times
+      description: 通过复活卡，好友助力复活
       requestBody:
         content:
           application/json:
@@ -291,10 +319,10 @@ paths:
               properties:
                 type:
                   type: string
-                  description: '复活类型: 看广告获取，好友助力获取'
+                  description: '复活类型: 复活卡复活，好友助力获取'
                   enum:
-                    - ad
                     - friend
+                    - revival_card
               required:
                 - type
     parameters: []
