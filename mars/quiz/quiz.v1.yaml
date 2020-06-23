@@ -143,16 +143,57 @@ paths:
                       reward_time:
                         type: string
                         description: 开奖时间
-                      ranking_enabled:
-                        type: boolean
-                        description: 是否开启排行榜
+                      end_left_seconds:
+                        type: integer
+                        description: 活动结束剩余时间，单位 second
+                      ranking:
+                        type: object
+                        required:
+                          - rank
+                          - quiz_count
+                          - coin
+                        properties:
+                          rank:
+                            type: integer
+                          quiz_count:
+                            type: integer
+                          coin:
+                            type: number
+                      revival_cards:
+                        type: object
+                        required:
+                          - today_left_times
+                          - total
+                        properties:
+                          today_left_times:
+                            type: integer
+                            description: 今日复活卡可使用次数
+                          total:
+                            type: integer
+                            description: 复活卡总数
+                      revival_friends:
+                        type: object
+                        description: 好友信息
+                        required:
+                          - today_left_times
+                          - active_count
+                        properties:
+                          today_left_times:
+                            type: integer
+                            description: 几天剩余助力数
+                          active_count:
+                            type: integer
+                            description: 活跃好友数量
                     required:
                       - enabled
                       - start_time
                       - end_time
                       - today_left_times
                       - reward_time
-                      - ranking_enabled
+                      - end_left_seconds
+                      - ranking
+                      - revival_cards
+                      - revival_friends
       operationId: get-quiz-info
       description: 获取答题信息
   /quiz/rewards:
@@ -174,30 +215,55 @@ paths:
                   data:
                     type: object
                     properties:
-                      rewards:
+                      reward_list:
                         type: array
                         items:
                           type: object
                           properties:
                             reward_type:
-                              type: integer
-                              description: 目前之后金币 coin： 1
+                              type: string
+                              description: 奖励类型
                             reward_value:
-                              type: number
+                              type: string
                               description: 奖励金额
-                            is_receive:
-                              type: boolean
-                              description: 是否已领取
                             reward_date:
                               type: string
-                              description: 奖励日期
-                            receive_time:
+                              description: 奖励获取日起
+                            is_receive:
                               type: string
-                              description: 领取时间
+                              description: 是否已领取
+                            reward_time:
+                              type: string
+                              description: 奖励领取时间
                           required:
                             - reward_type
+                            - reward_value
+                            - reward_date
+                            - is_receive
+                            - reward_time
       operationId: get-quiz-rewards
-      description: 获取用户奖励
+      description: 获取用户奖励信息
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: reward_type
+          description: '奖励类型: coin: 1'
+        - schema:
+            type: string
+          in: query
+          name: start_date
+          description: '奖励开始日期: 开始日期,不传默认不限制'
+        - schema:
+            type: string
+          in: query
+          name: end_date
+          description: 奖励结束日期，不传默认为不限制
+        - schema:
+            type: boolean
+          in: query
+          name: is_receive
+          description: '是否领取: 不传默认不限制'
     post:
       summary: 领取奖励
       operationId: post-quiz-rewards
@@ -220,22 +286,13 @@ paths:
                         type: object
                         properties:
                           reward_type:
-                            type: string
+                            type: integer
                             description: 奖励类型
                           reward_value:
-                            type: string
+                            type: number
                             description: 奖励金额
-                          is_receive:
-                            type: boolean
-                            description: 是否领取
-                          receive_time:
-                            type: string
-                            description: 领取时间
-                          reward_date:
-                            type: string
-                      total:
-                        type: number
-                        description: 对应奖励类型的总数
+                          total:
+                            type: number
       description: 领取用户未领取的奖励，客户端上传奖励中 is_receive 为false 的日期获取奖励
       parameters: []
       requestBody:
@@ -244,16 +301,13 @@ paths:
             schema:
               type: object
               properties:
-                reward_date:
-                  type: string
-                  description: 奖励日期
                 reward_type:
                   type: integer
-                  description: 指定奖励的类型，目前只有 coin： 1
-                  enum:
-                    - 1
-              required:
-                - reward_type
+                  description: 奖励类型
+                reward_date:
+                  type: string
+                  description: 奖励获取日期
+    parameters: []
   /quiz/ranking:
     get:
       summary: 获取答题排名
@@ -299,13 +353,9 @@ paths:
                         properties:
                           rank:
                             type: integer
-                          avatar:
-                            type: string
                           coin:
                             type: string
                             description: 如果date是today 表示预计可得
-                          user_name:
-                            type: string
                           quiz_count:
                             type: string
       operationId: get-quiz-ranking-total
@@ -317,16 +367,8 @@ paths:
               - all
               - yesterday
           in: query
-          name: date
-          description: '排名时间: all,today,yestetday'
-          required: true
-        - schema:
-            type: string
-            enum:
-              - coin
-          in: query
-          name: order_by
-          description: '排名类型: 目前只针对Coin'
+          name: type
+          description: '排名时间: all,today,yestertday'
           required: true
       description: 获取答题总排名，和当前用户具体的排名信息
     parameters: []
@@ -371,12 +413,13 @@ paths:
                           today_left_times:
                             type: integer
                             description: 今日剩余使用次数
-                      today_revival_left_times:
-                        type: number
-                        description: 今日剩余复活次数
+                      ad:
+                        type: object
+                        properties:
+                          today_left_times:
+                            type: integer
                     required:
                       - type
-                      - today_revival_left_times
       description: 通过复活卡，好友助力复活
       requestBody:
         content:
@@ -386,7 +429,7 @@ paths:
               properties:
                 type:
                   type: string
-                  description: '复活类型: 复活卡复活，好友助力获取'
+                  description: '复活类型: 看广告复活,复活卡复活，好友助力复活,'
                   enum:
                     - friend
                     - revival_card
@@ -415,39 +458,23 @@ paths:
                   data:
                     type: object
                     properties:
-                      today_revival_limit_times:
-                        type: integer
-                        description: 今日复活限制次数
-                      today_revival_card_limit_times:
+                      today_revival_card_and_ad_limit_times:
                         type: integer
                         description: 今日复活卡限制次数
                       today_revival_friend_limit_times:
                         type: integer
                         description: 今日好友助力复活限制次数
-                      today_revival_left_times:
-                        type: integer
-                        description: 今日复活剩余次数
-                      today_revival_card_left_times:
+                      today_revival_card_and_ad_left_times:
                         type: integer
                         description: 今日复活卡剩余使用次数
                       today_revival_friend_left_times:
                         type: integer
                         description: 今日通过好友助力复活剩余使用次数
-                      total_revival_times:
-                        type: integer
-                        description: 累计复活次数
-                      today_revival_times:
-                        type: integer
-                        description: 今日已复活次数
                     required:
-                      - today_revival_limit_times
-                      - today_revival_card_limit_times
+                      - today_revival_card_and_ad_limit_times
                       - today_revival_friend_limit_times
-                      - today_revival_left_times
-                      - today_revival_card_left_times
+                      - today_revival_card_and_ad_left_times
                       - today_revival_friend_left_times
-                      - total_revival_times
-                      - today_revival_times
       description: 1. 复活配置信息，2.用户当前复活状态信息
   /quiz/revival_cards:
     post:
@@ -471,6 +498,9 @@ paths:
                       total:
                         type: number
                         description: 复活卡总数
+                      today_left_times:
+                        type: integer
+                        description: 今日还可获得的复活卡数
       requestBody:
         content:
           application/json:
@@ -543,11 +573,13 @@ paths:
                               type: string
                               description: 是否助力
                       active_count:
-                        type: string
+                        type: integer
                         description: 活跃好友数
                       revival_count:
-                        type: string
+                        type: integer
                         description: 助力次数
+                      revival_left_times:
+                        type: integer
       operationId: get-quiz-friends
       description: ''
     parameters: []
@@ -614,15 +646,9 @@ paths:
                           rank:
                             type: integer
                             description: 排名
-                          avatar:
-                            type: string
-                            description: 头像
                           coin:
                             type: string
                             description: 预计
-                          user_name:
-                            type: string
-                            description: 用户名
                           quiz_count:
                             type: string
                             description: 答题数量
@@ -641,3 +667,26 @@ paths:
                 timeout:
                   type: boolean
                   description: 是否超时
+  /quiz/begin:
+    post:
+      summary: 答题开始入口
+      operationId: post-quiz-begin
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      today_left_times:
+                        type: integer
+                        description: 今日剩余次数
+      description: 答题开始入口  每次调用消耗一次当日答题次数
