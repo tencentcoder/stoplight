@@ -47,9 +47,6 @@ paths:
                       duration:
                         type: string
                         description: 答题时长
-                      start_time:
-                        type: string
-                        description: 试题开始时间，服务端记录的开始时间，用于客户端时间校验
                       quiz_id:
                         type: string
                         description: 测试ID
@@ -57,9 +54,9 @@ paths:
                       - duration
       operationId: ''
       description: 创建答题
-    put:
-      summary: 检查测试结果
-      operationId: put-quiz
+    get:
+      summary: 获取试题信息
+      operationId: get-quiz
       responses:
         '200':
           description: OK
@@ -69,36 +66,45 @@ paths:
                 type: object
                 properties:
                   code:
-                    type: number
+                    type: integer
                   message:
                     type: string
                   data:
                     type: object
                     properties:
-                      timeout:
-                        type: boolean
-                      correct:
-                        type: boolean
-              examples:
-                example-1: {}
-      description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                answer:
-                  type: string
-                  description: '答案,用户答题超时，默认为 ""'
-                timeout:
-                  type: boolean
-                  description: 当用户答题超时时设置为 true，默认为false
-                quiz_id:
-                  type: string
-                  description: 本次测试ID
-              required:
-                - quiz_id
+                      question:
+                        type: object
+                        properties:
+                          question_id:
+                            type: string
+                            description: 试题ID
+                          body:
+                            type: string
+                            description: 题干
+                          options:
+                            type: array
+                            description: 选项
+                            items:
+                              type: string
+                          difficulty:
+                            type: string
+                            description: 难度
+                      duration:
+                        type: string
+                        description: 答题时长
+                      quiz_id:
+                        type: string
+                        description: 测试ID
+                    required:
+                      - duration
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: quiz_id
+          description: 测试ID
+          required: true
+      description: 根据测试ID获取对应的测试
   /quiz/info:
     get:
       summary: 获取答题信息
@@ -374,8 +380,12 @@ paths:
                   enum:
                     - friend
                     - revival_card
+                quiz_id:
+                  type: string
+                  description: 指定要复活的试题
               required:
                 - type
+                - quiz_id
     parameters: []
     get:
       summary: 获取复活信息
@@ -531,3 +541,95 @@ paths:
       operationId: get-quiz-friends
       description: ''
     parameters: []
+  /quiz/start:
+    post:
+      summary: ''
+      operationId: post-quiz-start
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      start_time:
+                        type: string
+                        description: 服务器试题开始时间
+                      end_time:
+                        type: string
+                        description: 服务器试题结束时间
+      description: 开始答题
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quiz_id:
+                  type: string
+  /quiz/end:
+    post:
+      summary: ''
+      operationId: post-quiz-end
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      timeout:
+                        type: boolean
+                      correct:
+                        type: boolean
+                      quiz_count:
+                        type: integer
+                      ranking:
+                        type: object
+                        properties:
+                          rank:
+                            type: integer
+                            description: 排名
+                          avatar:
+                            type: string
+                            description: 头像
+                          coin:
+                            type: string
+                            description: 如果date是today 表示预计可得
+                          user_name:
+                            type: string
+                            description: 用户名
+                          quiz_count:
+                            type: string
+                            description: 答题数量
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quiz_id:
+                  type: string
+                  description: 对应的测试ID
+                answer:
+                  type: string
+                  description: 答案
+                timeout:
+                  type: boolean
+                  description: 是否超时
