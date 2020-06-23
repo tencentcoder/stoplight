@@ -140,12 +140,16 @@ paths:
                       reward_time:
                         type: string
                         description: 开奖时间
+                      ranking_enabled:
+                        type: boolean
+                        description: 是否开启排行榜
                     required:
                       - enabled
                       - start_time
                       - end_time
                       - today_left_times
                       - reward_time
+                      - ranking_enabled
       operationId: get-quiz-info
       description: 获取答题信息
   /quiz/rewards:
