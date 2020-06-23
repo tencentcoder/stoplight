@@ -1,7 +1,10 @@
 openapi: 3
 info:
   title: Mars Quiz
-  description: 百万答题接口 API
+  description: |-
+    百万答题接口 API
+    约定项:
+    请求header中包含 X-Dog-Token 字段
 servers:
   - url: 'http://test-mars.dev-bp.atcloudbox.com'
     description: ''
