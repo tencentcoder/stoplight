@@ -1,6 +1,6 @@
 openapi: 3
 info:
-  title: Quiz
+  title: Mars Quiz
   description: 百万答题接口 API
 servers:
   - url: 'http://test-mars.dev-bp.atcloudbox.com'
@@ -464,3 +464,25 @@ paths:
                   description: 获取复活卡的方式： 目前只有 广告 ad
         description: ''
       description: 通过某种方式获取复活卡，返回复活卡的总数
+    get:
+      summary: 获取复活卡信息
+      operationId: get-quiz-revival_cards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: string
+                      today_left_times:
+                        type: string
