@@ -198,7 +198,7 @@ paths:
       description: 获取答题信息
   /quiz/rewards:
     get:
-      summary: 获取用户奖励
+      summary: 获取用户奖励列表
       tags: []
       responses:
         '200':
@@ -264,7 +264,7 @@ paths:
           in: query
           name: is_receive
           description: '是否领取: 不传默认不限制'
-    post:
+    put:
       summary: 领取奖励
       operationId: post-quiz-rewards
       responses:
