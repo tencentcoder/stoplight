@@ -598,8 +598,6 @@ paths:
                         type: boolean
                       correct:
                         type: boolean
-                      quiz_count:
-                        type: integer
                       ranking:
                         type: object
                         properties:
