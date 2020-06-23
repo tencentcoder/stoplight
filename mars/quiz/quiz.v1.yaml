@@ -611,7 +611,7 @@ paths:
                             description: 头像
                           coin:
                             type: string
-                            description: 如果date是today 表示预计可得
+                            description: 预计
                           user_name:
                             type: string
                             description: 用户名
