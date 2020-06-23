@@ -486,3 +486,48 @@ paths:
                         type: string
                       today_left_times:
                         type: string
+  /quiz/revival_friends:
+    get:
+      summary: 答题助力好友列表
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      friends:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            user_name:
+                              type: string
+                              description: 用户名
+                            avatar:
+                              type: string
+                              description: 头像
+                            is_active:
+                              type: string
+                              description: 是否活跃
+                            is_revival:
+                              type: string
+                              description: 是否助力
+                      active_count:
+                        type: string
+                        description: 活跃好友数
+                      revival_count:
+                        type: string
+                        description: 助力次数
+      operationId: get-quiz-friends
+      description: ''
+    parameters: []
