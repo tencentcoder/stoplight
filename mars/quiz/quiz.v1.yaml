@@ -103,9 +103,45 @@ paths:
     get:
       summary: 获取答题信息
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: 当前是否可以答题
+                      start_time:
+                        type: string
+                        description: 答题开始时间
+                      end_time:
+                        type: string
+                        description: 答题结束时间
+                      today_left_times:
+                        type: string
+                        description: 用户今日剩余答题次数
+                      reward_time:
+                        type: string
+                        description: 开奖时间
+                    required:
+                      - enabled
+                      - start_time
+                      - end_time
+                      - today_left_times
+                      - reward_time
       operationId: get-quiz-info
-      description: ''
+      description: 获取答题信息
   /quiz/rewards:
     get:
       summary: 获取用户奖励
@@ -207,7 +243,7 @@ paths:
                 - reward_type
   /quiz/ranking:
     get:
-      summary: 获取用户答题排名
+      summary: 获取答题排名
       tags: []
       responses:
         '200':
@@ -224,7 +260,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      ranking:
+                      ranking_list:
                         type: array
                         items:
                           type: object
@@ -244,6 +280,21 @@ paths:
                             quiz_count:
                               type: integer
                               description: 答题次数
+                      ranking:
+                        type: object
+                        description: 当前用户排名信息
+                        properties:
+                          rank:
+                            type: integer
+                          avatar:
+                            type: string
+                          coin:
+                            type: string
+                            description: 如果date是today 表示预计可得
+                          user_name:
+                            type: string
+                          quiz_count:
+                            type: string
       operationId: get-quiz-ranking-total
       parameters:
         - schema:
@@ -264,7 +315,7 @@ paths:
           name: order_by
           description: '排名类型: 目前只针对Coin'
           required: true
-      description: 可以获取用户在某一特定时间内的某个类型的排名
+      description: 获取答题总排名，和当前用户具体的排名信息
     parameters: []
   /quiz/revival:
     post:
@@ -326,3 +377,90 @@ paths:
               required:
                 - type
     parameters: []
+    get:
+      summary: 获取复活信息
+      operationId: get-quiz-revival
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      today_revival_limit_times:
+                        type: integer
+                        description: 今日复活限制次数
+                      today_revival_card_limit_times:
+                        type: integer
+                        description: 今日复活卡限制次数
+                      today_revival_friend_limit_times:
+                        type: integer
+                        description: 今日好友助力复活限制次数
+                      today_revival_left_times:
+                        type: integer
+                        description: 今日复活剩余次数
+                      today_revival_card_left_times:
+                        type: integer
+                        description: 今日复活卡剩余使用次数
+                      today_revival_friend_left_times:
+                        type: integer
+                        description: 今日通过好友助力复活剩余使用次数
+                      total_revival_times:
+                        type: integer
+                        description: 累计复活次数
+                      today_revival_times:
+                        type: integer
+                        description: 今日已复活次数
+                    required:
+                      - today_revival_limit_times
+                      - today_revival_card_limit_times
+                      - today_revival_friend_limit_times
+                      - today_revival_left_times
+                      - today_revival_card_left_times
+                      - today_revival_friend_left_times
+                      - total_revival_times
+                      - today_revival_times
+      description: 1. 复活配置信息，2.用户当前复活状态信息
+  /quiz/revival_cards:
+    post:
+      summary: 获取复活卡
+      operationId: post-quiz-revival_cards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: number
+                        description: 复活卡总数
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - ad
+                  description: 获取复活卡的方式： 目前只有 广告 ad
+        description: ''
+      description: 通过某种方式获取复活卡，返回复活卡的总数
