@@ -356,6 +356,9 @@ paths:
                             type: string
                           avatar:
                             type: string
+                          today_left_times:
+                            type: string
+                            description: 今日剩余好友助力次数
                       revival_card:
                         type: object
                         properties:
