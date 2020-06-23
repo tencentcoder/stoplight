@@ -543,7 +543,7 @@ paths:
     parameters: []
   /quiz/start:
     post:
-      summary: ''
+      summary: 开始答题
       operationId: post-quiz-start
       responses:
         '200':
@@ -577,7 +577,7 @@ paths:
                   type: string
   /quiz/end:
     post:
-      summary: ''
+      summary: 结束答题
       operationId: post-quiz-end
       responses:
         '200':
